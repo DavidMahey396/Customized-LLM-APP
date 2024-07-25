@@ -1,42 +1,85 @@
-# Customized-LLM-APP
+# Historic Artifact Restoration Advisor: RAG-Enhanced Chatbot
 
-Building a Retrieval-Augmented Generation (RAG) bot can significantly enhance the capabilities of a language model by incorporating external knowledge to generate more accurate and contextually relevant responses. This guide will walk you through creating a simple RAG bot using Gradio and the Hugging Face APIs.
+This project implements a Retrieval-Augmented Generation (RAG) chatbot specializing in historic artifact restoration advice. Using the Zephyr 7B Beta model and leveraging external knowledge, this chatbot provides expert guidance on artifact restoration and preservation.
 
-But how does RAG enhance LLM’s performance?
+## Features
 
-RAG improves the performance of language models by augmenting them with external documents. This method retrieves relevant documents based on the user query and combines them with the original prompt before passing them to the language model for response generation. This approach ensures that the language model can access up-to-date and domain-specific information without the need for extensive retraining.
+- Expert advice on restoration techniques and preservation best practices
+- Damage assessment guidance
+- Historical context and significance explanations
+- RAG-enhanced responses using a specialized knowledge base
+- Customizable chat parameters (max tokens, temperature, top-p sampling)
 
+## Technical Components
 
+- **LLM Model**: Zephyr 7B Beta (via Hugging Face)
+- **Embedding Model**: all-MiniLM-L6-v2 (Sentence Transformers)
+- **Vector Database**: FAISS
+- **UI Framework**: Gradio
+- 
+## Requirements
 
-A common scenario of RAG helping LLM (Source)
+- Python 3.7+
+- Dependencies listed in `requirements.txt`
 
-The basic steps in RAG can be simplified as follows:
+## Installation
 
-Input: The question to which the LLM system responds is referred to as the input. If no RAG is used, the LLM is directly used to respond to the question.
+1. Clone this repository:
+   ```
+   git clone https://github.com/DavidMahey396/Customized-LLM-APP.git
+   cd Customized-LLM-APP
+   ```
 
-Indexing: If RAG is used, then a series of related documents are indexed by chunking them first, generating embeddings of the chunks, and indexing them into a vector store. At inference, the query is also embedded in a similar way.
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
 
+3. Run the application:
+   ```
+   python app.py
+   ```
 
-Basic retrieval steps in RAG. (Source)
+## Usage
 
-Retrieval: The relevant documents are obtained by comparing the query against the indexed vectors, also denoted as “Relevant Documents”.
+After starting the application, interact with the chatbot through the Gradio interface. You can ask questions about artifact restoration, preservation techniques, or historical context. The chatbot will use RAG to provide informed responses based on your queries and its knowledge base.
 
-Generation: The relevant documents are combined with the original prompt as additional context. The combined text and prompt are then passed to the model for response generation which is then prepared as the final output of the system to the user.
+Example queries:
+- "How should I clean a 19th-century oil painting?"
+- "What's the best way to preserve an ancient ceramic vase?"
+- "Can you help me assess the damage on this antique wooden furniture?"
 
-In the example provided, using the model directly fails to respond to the question due to a lack of knowledge of current events. On the other hand, when using RAG, the system can pull the relevant information needed for the model to answer the question appropriately. (Source)
+## Customization
 
-Now Let’s Build a Chatbot using RAG:
+You can adjust the chatbot's behavior using the additional inputs provided in the Gradio interface:
+- System message: Define the chatbot's role and capabilities
+- Max new tokens: Control the length of the generated responses
+- Temperature: Adjust the randomness of the output
+- Top-p (nucleus sampling): Fine-tune the diversity of the generated text
 
-I have used Zephyr LLM model and all-MiniLM-L6-v2 sentence transformer model. This sentence-transformers model maps sentences & paragraphs to a 384 dimensional dense vector space and can be used for tasks like clustering or semantic search.
+## How It Works
 
-The all-* models were trained on all available training data (more than 1 billion training pairs) and are designed as general purpose models. The all-mpnet-base-v2 model provides the best quality, while all-MiniLM-L6-v2 is 5 times faster and still offers good quality. Toggle All models to see all evaluated original models.
+1. **Text Processing**: The app processes and stores text as documents.
+2. **Vector Database**: Document embeddings are created and indexed for efficient retrieval.
+3. **Query Processing**: User queries are embedded and compared against the document embeddings.
+4. **RAG**: Relevant documents are retrieved and combined with the original query.
+5. **Response Generation**: The LLM generates a response based on the augmented input.
 
-We need the following ingredients:
+## Contributing
 
-1. A PDF as your knowledgebase
+Contributions to improve the chatbot are welcome. Please submit pull requests or open issues for any enhancements or bug fixes.
 
-2. A requirements.txt file
+## Disclaimer
 
-3. An app.py file
+This chatbot is designed to provide general advice and information. For valuable or sensitive artifacts, always consult with a professional conservator or restoration expert.
 
-4. An account on Hugging Face (See this blog to learn about building a LLM chatbot in Hugging Face)
+## Contact
+
+For any questions or concerns, please open an issue in this repository or contact da4368396@alphacollege.me
+
+## Acknowledgements
+
+- Hugging Face for providing the Zephyr 7B Beta model
+- Sentence Transformers for the embedding model
+- Gradio for the user interface framework
+- FAISS for efficient similarity search
